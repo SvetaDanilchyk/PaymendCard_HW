@@ -1,15 +1,16 @@
-﻿using HW_Cards.PaymentCards;
+﻿using Card.Comparers;
+using HW_Cards.PaymentCards;
 using HW_Cards.PaymentMeans;
 namespace HW_Cards.BankCore
 {
-    internal class BankClient :  IComparable<BankClient>
+    internal class BankClient 
     {
         public string Name { get; set; }
        
-        public Adress Adress { get; set; }
+        public Address Adress { get; set; }
 
-        public List<IPayment> PaymentMeans { get; protected set; }
-        public BankClient(string name, Adress adress)
+        public List<IPayment> PaymentMeans { get;  set; }
+        public BankClient(string name, Address adress)
         {
             Name = name;
             Adress = adress;
@@ -40,7 +41,7 @@ namespace HW_Cards.BankCore
 
         
         public bool AddPaymentMean(IPayment mean)
-        {
+        { /// 
             if (mean != null)
             {
                 PaymentMeans.Add(mean);
@@ -49,7 +50,7 @@ namespace HW_Cards.BankCore
             return false;
                 
         }
-
+     
         public bool MakePaymentBanlClient(float amount)
         {
             if (SpecialPay(PaymentMeans.Where(x => x is Cash).ToList(), amount))
@@ -71,11 +72,7 @@ namespace HW_Cards.BankCore
 
             return false;
         }
-      
-        public int CompareTo(BankClient? obj)
-        {
-            return Name.CompareTo(obj?.Name);
-        }
+
         public override string ToString()
         {
             String paymentMeans = "\n";
@@ -101,7 +98,6 @@ namespace HW_Cards.BankCore
             }
             return " Names: " +  Name  +  "  " + paymentMeans;
         }
-
 
     } 
 }

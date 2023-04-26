@@ -2,7 +2,7 @@
 
 namespace HW_Cards.BankCore
 {
-    internal class Adress : IComparable<Adress>
+    internal class Address 
     {
         public string Country { get; set; }
         public string City { get; set; }
@@ -11,7 +11,7 @@ namespace HW_Cards.BankCore
         public int FlatNumber { get; set; }
         public int Index { get; set; }
 
-        public Adress(string country, string city, string street, int houseNumber, int flatNumber, int index)
+        public Address(string country, string city, string street, int houseNumber, int flatNumber, int index)
         {
             Country = country;
             City = city;
@@ -21,14 +21,10 @@ namespace HW_Cards.BankCore
             Index = index;
         }
 
-        public int CompareTo(Adress? obj)
-        {
-            return City.CompareTo(obj?.City);
-        }
-
         public override string ToString()
         {
             return String.Format("country: {0}, city: {1},street: {2},HouseNumber: {3},flatNumber: {4},index: {5}", Country, City, Street, HouseNumber, FlatNumber, Index);
         }
+
     }
 }

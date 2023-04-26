@@ -1,0 +1,17 @@
+﻿using HW_Cards.BankCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Card.Comparers
+{
+    internal class ClientAddressComparer : IComparer<BankClient>
+    {
+        public int Compare(BankClient? x, BankClient? y)
+        {
+            return x.Adress.City.CompareTo(y.Adress.City);
+        }
+    }
+}
