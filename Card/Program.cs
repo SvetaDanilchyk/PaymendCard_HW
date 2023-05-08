@@ -1,7 +1,11 @@
 ﻿using Card.Comparers;
-using HW_Cards.BankCore;
+using Card.BankCore;
 using HW_Cards.PaymentCards;
 using HW_Cards.PaymentMeans;
+using System.Linq;
+using System.Collections.Immutable;
+using System.Security.Cryptography.X509Certificates;
+using Card;
 
 namespace HW_Cards
 {
@@ -22,6 +26,7 @@ namespace HW_Cards
             DebetCard debetCard1 = new DebetCard("125698", new DateTime(2023, 05, 12), 120, 1000, 2.0F);
             DebetCard debetCard2 = new DebetCard("168954", new DateTime(2024, 02, 07), 369, 25000, 7.0F);
             DebetCard debetCard3 = new DebetCard("102146", new DateTime(2025, 07, 21), 111, 400, 3.0F);
+            DebetCard debetCard4 = new DebetCard("177746", new DateTime(2027, 05, 11), 361, 500500, 7.0F);
 
             CashBackCard cashBackCard1 = new CashBackCard("265910", new DateTime(2027, 06, 11), 218, 1000, 200);
             CashBackCard cashBackCard2 = new CashBackCard("276400", new DateTime(2025, 08, 27), 218, 12500, 1000);
@@ -35,41 +40,62 @@ namespace HW_Cards
             Cash cash2 = new Cash(10);
             Cash cash3 = new Cash(10000);
 
-
-            client1.AddPaymentMean(debetCard1);         
+            BitCoin bitCoin1 = new BitCoin(2500);
+            BitCoin bitCoin2 = new BitCoin(1000);
+            BitCoin bitCoin3 = new BitCoin(70231);
+            
             client1.AddPaymentMean(cashBackCard1);
-            client1.AddPaymentMean(creditCard1);
+            client1.AddPaymentMean(creditCard1);        //ZPetrov
+            client1.AddPaymentMean(debetCard1);
+            client1.AddPaymentMean(debetCard4);
             client1.AddPaymentMean(cash1);
+            client1.AddPaymentMean(bitCoin1);
 
-
+            client2.AddPaymentMean(creditCard2);
             client2.AddPaymentMean(debetCard2);
-            client2.AddPaymentMean(creditCard2);       
             client2.AddPaymentMean(cash2);
+           // client2.AddPaymentMean(bitCoin2);
 
-            client3.AddPaymentMean(debetCard3);         
+            client3.AddPaymentMean(debetCard3);         // ASidorow
             client3.AddPaymentMean(cashBackCard3);
             client3.AddPaymentMean(cash3);
-
+            //client3.AddPaymentMean(bitCoin3);
 
 
             List<BankClient> listClients = new List<BankClient> { client1, client2, client3};
             float sum = 1000;
 
-            for (int i = 0; i < 2; i++)
+            var sortListCliets = listClients.Select(x => x.Name).OrderBy(x => x).ToList();
+            var sortAddress = listClients.Select(x => x.Adress.City).OrderBy(x => x).ToList();
+
+
+            /* foreach (Address client in sortClientsAdress)
+                     Console.WriteLine(client);*/
+
+            //for (int i = 0; i < 2; i++)
+            //{
+            //    foreach (BankClient item in listClients)
+            //    {
+            //        item.MakePaymentBanlClient(sum);
+            //        Console.WriteLine(item);
+            //    }
+            //    sum += 250;
+            ////}
+
+            //debetCard1.TopUp(100);
+
+            //Console.WriteLine(debetCard1);
+
+            listClients.Sort(new AllMeansComparer());
+            Console.WriteLine(listClients[^1]);      // richest client
+
+            foreach (BankClient i in listClients)   // get debet cards clients and allMeans
             {
-                foreach (BankClient item in listClients)
-                {
-                    item.MakePaymentBanlClient(sum);
-                    Console.WriteLine(item);
-                }
-                sum += 250;
+                i.GetDebetCardsClient();
+                i.GetAllMeans();
+
             }
 
-            debetCard1.TopUp(100);
-
-            Console.WriteLine(debetCard1);
-
-            listClients.Sort(new MaxAmounOnePaymend()); //
 
         }
     }

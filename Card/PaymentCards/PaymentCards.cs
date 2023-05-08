@@ -31,7 +31,7 @@ namespace HW_Cards.PaymentCards
             Balance = balance;
 
         }
-        
+       
         public abstract bool Pay(float amount);
         public abstract bool TopUp(float sum);
 

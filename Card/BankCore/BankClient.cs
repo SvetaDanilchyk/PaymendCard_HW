@@ -1,7 +1,12 @@
 ﻿using Card.Comparers;
 using HW_Cards.PaymentCards;
 using HW_Cards.PaymentMeans;
-namespace HW_Cards.BankCore
+using System.Linq;
+using HW_Cards;
+using Card.BankCore;
+using System.Transactions;
+
+namespace Card.BankCore
 {
     internal class BankClient 
     {
@@ -39,7 +44,6 @@ namespace HW_Cards.BankCore
             return false;
         }
 
-        
         public bool AddPaymentMean(IPayment mean)
         { /// 
             if (mean != null)
@@ -50,7 +54,6 @@ namespace HW_Cards.BankCore
             return false;
                 
         }
-     
         public bool MakePaymentBanlClient(float amount)
         {
             if (SpecialPay(PaymentMeans.Where(x => x is Cash).ToList(), amount))
@@ -69,8 +72,29 @@ namespace HW_Cards.BankCore
             {
                 Console.WriteLine("GoodCashBackCard");
             }
+            else if (SpecialPay(PaymentMeans.Where(x => x is BitCoin).ToList(), amount))
+            {
+                Console.WriteLine("GoodBitcoin");
+            }
 
             return false;
+        }
+
+        public void GetDebetCardsClient()
+        {
+                PaymentMeans.Where(x => x is DebetCard).Select(x => x as DebetCard).ToList().ForEach(x => Console.WriteLine(Name + " " + x));
+        }
+
+        public void GetAllMeans()
+        {
+           double sumAll =  PaymentMeans.Where(x => x is PaymentCards).Select(x => x as PaymentCards).Select(x => x.Balance).Sum() + 
+                            PaymentMeans.Where(x => x is Cash).Select(x => x as Cash).Select(x => x.Balance).Sum() +
+                            PaymentMeans.Where(x => x is BitCoin).Select(x => x as BitCoin).Select(x => x.Balance).Sum();
+            Console.WriteLine(Name + " Means = " + sumAll + "\n");
+        }
+
+        public void GetClinetBitCoinDescending()
+        {
         }
 
         public override string ToString()
@@ -91,10 +115,13 @@ namespace HW_Cards.BankCore
                 } else if (item is CashBackCard)
                 {
                     paymentMeans += item as CashBackCard;
+                } else if (item is BitCoin)
+                {
+                    paymentMeans += item as BitCoin;
                 }
-                
 
-               paymentMeans += "\n";
+
+                paymentMeans += "\n";
             }
             return " Names: " +  Name  +  "  " + paymentMeans;
         }

@@ -1,19 +1,25 @@
-﻿
-namespace HW_Cards.PaymentMeans
-{
-    internal class Cash : IPayment
-    {
-        public float Balance { get; set; } //CashMeans
+﻿using HW_Cards;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-        public Cash(float balance)
-        { 
+namespace Card
+{
+    internal class BitCoin : IPayment
+    {
+        public float Balance { get; set; }
+
+        public BitCoin(float balance) 
+        {
             Balance = balance;
         }
         public bool Pay(float amount)
         {
             if (Balance - amount > 0)
             {
-                Balance -= amount;    
+                Balance -= amount;
                 return true;
             }
             return false;
@@ -31,8 +37,7 @@ namespace HW_Cards.PaymentMeans
 
         public override string ToString()
         {
-            return string.Format(" Cash balance: {0}", Balance);
+            return string.Format(" Bitcoin: {0}", Balance);
         }
-
     }
 }

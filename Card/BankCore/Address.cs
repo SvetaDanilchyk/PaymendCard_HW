@@ -1,6 +1,6 @@
 ﻿
 
-namespace HW_Cards.BankCore
+namespace Card.BankCore
 {
     internal class Address 
     {
@@ -20,7 +20,6 @@ namespace HW_Cards.BankCore
             FlatNumber = flatNumber;
             Index = index;
         }
-
         public override string ToString()
         {
             return String.Format("country: {0}, city: {1},street: {2},HouseNumber: {3},flatNumber: {4},index: {5}", Country, City, Street, HouseNumber, FlatNumber, Index);
