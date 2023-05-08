@@ -1,4 +1,4 @@
-﻿using HW_Cards.BankCore;
+﻿using Card.BankCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;

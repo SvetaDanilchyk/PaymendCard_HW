@@ -1,5 +1,5 @@
 ﻿using HW_Cards;
-using HW_Cards.BankCore;
+using Card.BankCore;
 using HW_Cards.PaymentCards;
 using HW_Cards.PaymentMeans;
 using System;
@@ -13,20 +13,26 @@ namespace Card.Comparers
 {
     internal class AllMeansComparer : IComparer<BankClient>
     {
-        private float AllMeans(BankClient? client)
+        
+        public float AllMeans(BankClient? client)
         {
-            float allMeans = 0;
-
-            foreach (PaymentCards i in Helper.GetClientPaymentCards(client))
-            {
-                allMeans += i.Balance;
-            }
-            foreach (Cash i in Helper.GetClientsPaymendMeans(client))
-            {
-                allMeans += i.CashMeans;
-            }
-
+            float allMeans = Helper.GetClientPaymentCards(client).Select(x => x.Balance).Sum() + 
+                             Helper.GetClientsPaymendMeans(client).Select(x => x.Balance).Sum() +
+                             Helper.GetClientPaymentBitCoin(client).Select(x => x.Balance).Sum();
             return allMeans;
+
+            //float allMeans = 0;
+
+            //foreach (PaymentCards i in Helper.GetClientPaymentCards(client))
+            //{
+            //    allMeans += i.Balance;
+            //}
+            //foreach (Cash i in Helper.GetClientsPaymendMeans(client))
+            //{
+            //    allMeans += i.CashMeans;
+            //}
+
+            //return allMeans;
         }
         public int Compare(BankClient? client1, BankClient? client2)
         {
