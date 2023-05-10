@@ -1,11 +1,10 @@
 ﻿
 
-namespace HW_Cards
+namespace Card;
+
+internal interface IPayment
 {
-    internal interface IPayment
-    {
-        public bool Pay(float amount);
-        public bool TopUp(float sum);
-        
-    }
+    public bool Pay(float amount);
+    public bool TopUp(float sum);
+    
 }

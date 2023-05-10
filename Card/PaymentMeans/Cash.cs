@@ -1,37 +1,30 @@
 ﻿
-namespace HW_Cards.PaymentMeans
+namespace Card.PaymentMeans
 {
-    internal class Cash : IPayment
+    internal class Cash : PaymentTool
     {
-        public float Balance { get; set; } //CashMeans
-
-        public Cash(float balance)
-        { 
-            Balance = balance;
-        }
-        public bool Pay(float amount)
+        public Cash(float balance) : base(balance) { }
+        public override bool Pay(float amount)
         {
-            if (Balance - amount > 0)
+            if (_balance - amount > 0)
             {
-                Balance -= amount;    
+                _balance -= amount;    
                 return true;
             }
             return false;
         }
-
-        public bool TopUp(float sum)
+        public override bool TopUp(float sum)
         {
             if (sum > 0)
             {
-                Balance += sum;
+                _balance += sum;
                 return true;
             }
             return false;
         }
-
         public override string ToString()
         {
-            return string.Format(" Cash balance: {0}", Balance);
+            return string.Format("Cash balance: {0}", _balance);
         }
 
     }

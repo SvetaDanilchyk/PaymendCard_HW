@@ -1,134 +1,121 @@
-﻿using Card.Comparers;
-using HW_Cards.PaymentCards;
-using HW_Cards.PaymentMeans;
-using System.Linq;
-using HW_Cards;
-using Card.BankCore;
-using System.Transactions;
+﻿using Card.PaymentMeans;
+using Card.PaymentMeans.PaymentCards;
 
-namespace Card.BankCore
+namespace Card.BankCore;
+
+internal class BankClient 
 {
-    internal class BankClient 
+    private string _name;
+    public Address Adress { get; set; }
+    public List<IPayment> PaymentMeans { get;}
+    public string Name 
     {
-        public string Name { get; set; }
-       
-        public Address Adress { get; set; }
-
-        public List<IPayment> PaymentMeans { get;  set; }
-        public BankClient(string name, Address adress)
-        {
-            Name = name;
-            Adress = adress;
-            PaymentMeans = new List<IPayment>();
+        get
+        { 
+            return _name;
         }
-        private bool SpecialPay (List<IPayment> list,float amount)
+        set
         {
-            foreach(IPayment item in list)
+            if (value == "")
             {
-                if(item.Pay(amount)==true)
-                {
-                    return true;
-                }
+                throw new ArgumentException("Empty string");
             }
-            return false;
-        }
-        public bool toUp(List<IPayment> list,float amount)
-        {
-            foreach (IPayment item in PaymentMeans)
+            else if (value.Length > 50)
             {
-                if (item.TopUp(amount) == true)
-                {
-                    return true;
-                }
+                throw new ArgumentException("Input name is long");
             }
-            return false;
+            _name = value;
+        }
+    }
+
+    public BankClient(string name, Address adress)
+    {
+        Name = name;
+        Adress = adress;
+        PaymentMeans = new List<IPayment>();
+    }
+
+    public bool AddPaymentMean(IPayment mean)
+    { 
+        if (mean != null)
+        {
+            PaymentMeans.Add(mean);
+            return true;
+        }
+        return false;
+            
+    }
+    public bool MakePaymentBankClient(float amount)
+    {
+        if (SpecialPay(PaymentMeans.Where(x => x is Cash).ToList(), amount))
+        {
+            return true;
+        }
+        else if(SpecialPay(PaymentMeans.Where(x => x is DebetCard).ToList(), amount))
+        {
+            return true;
+        }
+        else if (SpecialPay(PaymentMeans.Where(x => x is CreditCard).ToList(), amount))
+        {
+            return true;
+        } 
+        else if (SpecialPay(PaymentMeans.Where(x => x is CashBackCard).ToList(), amount))
+        {
+            return true;
+        }
+        else if (SpecialPay(PaymentMeans.Where(x => x is BitCoin).ToList(), amount))
+        {
+            return true;
         }
 
-        public bool AddPaymentMean(IPayment mean)
-        { /// 
-            if (mean != null)
+        return false;
+    }
+
+    public IEnumerable<DebetCard> GetDebetCardsClient()
+    {
+        var listDebetCardsClient = PaymentMeans.OfType<DebetCard>().ToList();
+        return listDebetCardsClient;
+    }
+
+    public double GetAllMeans()
+    {
+       return  PaymentMeans.OfType<PaymentTool>().Select(x => x.Balance).Sum();
+    }
+    public List<PaymentTool> GetClinetBitCoinDescending()
+    {
+        List<PaymentTool> sortListDescending = new();
+        foreach (var card in PaymentMeans)
+        {
+            if (card is BitCoin)
             {
-                PaymentMeans.Add(mean);
+               sortListDescending = PaymentMeans.OfType<PaymentTool>().OrderByDescending(x => x.Balance).ToList();                
+            }
+        }
+
+        return sortListDescending;
+    }
+
+    public override string ToString()
+    {
+        String paymentMeans = "\n";
+        PaymentMeans.OfType<PaymentTool>().Select(x => (paymentMeans += x.ToString() + "\n")).ToList();
+
+        return paymentMeans;
+    }
+
+    private bool SpecialPay(List<IPayment> list, float amount)
+    {
+        foreach (IPayment item in list)
+        {
+            if (item.Pay(amount) == true)
+            {
                 return true;
             }
-            return false;
-                
         }
-        public bool MakePaymentBanlClient(float amount)
-        {
-            if (SpecialPay(PaymentMeans.Where(x => x is Cash).ToList(), amount))
-            {
-                Console.WriteLine("GoodCash");
-            }
-            else if(SpecialPay(PaymentMeans.Where(x => x is DebetCard).ToList(), amount))
-            {
-                Console.WriteLine("GoodDebet");
-            }
-            else if (SpecialPay(PaymentMeans.Where(x => x is CreditCard).ToList(), amount))
-            {
-                Console.WriteLine("GoodCreditCard");
-            } 
-            else if (SpecialPay(PaymentMeans.Where(x => x is CashBackCard).ToList(), amount))
-            {
-                Console.WriteLine("GoodCashBackCard");
-            }
-            else if (SpecialPay(PaymentMeans.Where(x => x is BitCoin).ToList(), amount))
-            {
-                Console.WriteLine("GoodBitcoin");
-            }
-
-            return false;
-        }
-
-        public void GetDebetCardsClient()
-        {
-                PaymentMeans.Where(x => x is DebetCard).Select(x => x as DebetCard).ToList().ForEach(x => Console.WriteLine(Name + " " + x));
-        }
-
-        public void GetAllMeans()
-        {
-           double sumAll =  PaymentMeans.Where(x => x is PaymentCards).Select(x => x as PaymentCards).Select(x => x.Balance).Sum() + 
-                            PaymentMeans.Where(x => x is Cash).Select(x => x as Cash).Select(x => x.Balance).Sum() +
-                            PaymentMeans.Where(x => x is BitCoin).Select(x => x as BitCoin).Select(x => x.Balance).Sum();
-            Console.WriteLine(Name + " Means = " + sumAll + "\n");
-        }
-
-        public void GetClinetBitCoinDescending()
-        {
-        }
-
-        public override string ToString()
-        {
-            String paymentMeans = "\n";
-            foreach (IPayment item in PaymentMeans)
-            {
-
-                if(item is CreditCard)
-                {
-                    paymentMeans += item as CreditCard;
-                } else if (item is DebetCard)
-                {
-                    paymentMeans += item as DebetCard;
-                } else if (item is Cash)
-                {
-                    paymentMeans += item as Cash;
-                } else if (item is CashBackCard)
-                {
-                    paymentMeans += item as CashBackCard;
-                } else if (item is BitCoin)
-                {
-                    paymentMeans += item as BitCoin;
-                }
-
-
-                paymentMeans += "\n";
-            }
-            return " Names: " +  Name  +  "  " + paymentMeans;
-        }
-
-    } 
+        return false;
+    }
 }
 
 
-       
-    
+
+
