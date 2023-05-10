@@ -1,17 +1,15 @@
 ﻿using Card.BankCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Card.Comparers
+namespace Card.Comparers;
+
+internal class ClientAddressComparer : IComparer<BankClient>
 {
-    internal class ClientAddressComparer : IComparer<BankClient>
+    public int Compare(BankClient client1, BankClient client2)
     {
-        public int Compare(BankClient? x, BankClient? y)
-        {
-            return x.Adress.City.CompareTo(y.Adress.City);
-        }
+        if (client1 == null && client2 == null) return 0;
+        if (client1 != null && client2 == null) return -1;
+        if (client1 == null && client2 != null) return 1;
+
+        return client1.Adress.City.CompareTo(client2.Adress.City);
     }
 }
