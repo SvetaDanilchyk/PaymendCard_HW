@@ -7,14 +7,14 @@ internal class CashBackCard : PaymentCards
     public CashBackCard(string cardNumber, DateTime data, ushort cvvCard, float cashBack, float balance) : base(cardNumber, data, cvvCard, balance)
     {
         CashBack = cashBack;
-        _balanceCasBack = _balance + CashBack;
+        Balance = CashBack + Balance;
     }
 
     public override bool Pay(float amount)
     {
-        if (_balanceCasBack > amount)
+        if (Balance > amount)
         {
-            _balanceCasBack -= amount;
+            Balance -= amount;
             return true;
         }
         return false;
@@ -23,7 +23,7 @@ internal class CashBackCard : PaymentCards
     {
         if (sum > 0)
         {
-            _balance += sum;
+            Balance += sum;
             return true;
         }
         return false;
@@ -31,7 +31,7 @@ internal class CashBackCard : PaymentCards
 
     public override string ToString()
     {
-        return string.Format("Cash Back card available funds: {0} ", _balanceCasBack);
+        return string.Format("Cash Back card available funds: {0} ", Balance);
     }
 
 
