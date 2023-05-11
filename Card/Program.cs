@@ -32,23 +32,20 @@ internal class Program
 
         var bitCoin1 = new BitCoin(2500);
         var bitCoin2 = new BitCoin(1000);
-        var bitCoin3 = new BitCoin(70231);
+        var bitCoin3 = new BitCoin(7231);
         
         client1.AddPaymentMean(cashBackCard1);
         client1.AddPaymentMean(creditCard1);                     //ZPetrov
         client1.AddPaymentMean(debetCard1);
-        client1.AddPaymentMean(debetCard4);
         client1.AddPaymentMean(cash1);
 
-        client2.AddPaymentMean(creditCard2);
-        client2.AddPaymentMean(debetCard2);
+        client2.AddPaymentMean(creditCard2);                    //Ivanova
+        client2.AddPaymentMean(debetCard2); 
         client2.AddPaymentMean(cash2);
-       // client2.AddPaymentMean(bitCoin2);        
+        client2.AddPaymentMean(bitCoin2);
 
         client3.AddPaymentMean(debetCard3);                      // ASidorow
-        client3.AddPaymentMean(cashBackCard3);
         client3.AddPaymentMean(cash3);
-        client3.AddPaymentMean(bitCoin3);
 
         List<BankClient> listClients = new List<BankClient> { client1, client2, client3};
 
@@ -69,15 +66,17 @@ internal class Program
         listClients.Sort(new AllMeansComparer());
         Console.WriteLine(listClients[^1]);                     // richest client
 
+
+
         foreach (var client in listClients)                     // get debet cards clients and allMeans
         {
             var listDebetForDebetCards = client.GetDebetCardsClient();
-            listDebetForDebetCards.Where(x => x is DebetCard).ToList().ForEach(x => Console.WriteLine("Name:  " + client.Name +" "+ x));
+            listDebetForDebetCards.Where(x => x is DebetCard).ToList().ForEach(x => Console.WriteLine("Name:  " + client.Name + " " + x));
 
             Console.WriteLine("Name:  " + client.Name + " All means: " + client.GetAllMeans() + "\n");
         }
 
-        listClients.ForEach(client => client.GetClinetBitCoinDescending().
+        listClients.ForEach(client => client.GetClientBitCoinDescending().
                     ForEach(x => Console.WriteLine("Name client: " + client.Name + " " + x)));
     }
 

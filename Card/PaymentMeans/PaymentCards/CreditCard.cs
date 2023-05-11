@@ -2,7 +2,9 @@
 
 internal class CreditCard : PaymentCards
 {
-    private float BalanceLimit;
+   // private float _balanceLimit;
+
+    private float BalanceLimit { get => Limit + Balance; }   
     public float CreditPercent { get; set; }
     public float Limit { get; set; }
 
@@ -10,15 +12,14 @@ internal class CreditCard : PaymentCards
     {
         CreditPercent = creditPercent;
         Limit = limit;
-        BalanceLimit = Limit + _balance;
     }
     public override bool Pay(float amount)
     {
-        BalanceLimit = Balance + Limit;
+       //alanceLimit = Balance + Limit;
 
         if (BalanceLimit > amount)
         {
-            BalanceLimit -= amount;
+            Balance -= amount;
             return true;
         }
         return false;
@@ -28,13 +29,13 @@ internal class CreditCard : PaymentCards
     {
         if (sum > 0)
         {
-            _balance += sum;
+            Balance += sum;
             return false;
         }
         return true;
     }
     public override string ToString()
     {
-        return string.Format("Credit Card available funds : {0} ", BalanceLimit);
+        return string.Format("Credit Card available funds : {0} ", Balance);
     }
 }

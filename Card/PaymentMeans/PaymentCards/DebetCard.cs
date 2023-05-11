@@ -10,9 +10,9 @@ internal class DebetCard : PaymentCards
     }
     public override bool Pay(float amount)
     {
-        if (_balance > amount)
+        if (Balance > amount)
         {
-            _balance -= amount;
+            Balance -= amount;
             return true;
         }
         return false;
@@ -21,7 +21,7 @@ internal class DebetCard : PaymentCards
     {
         if (sum > 0)
         {
-            _balance += sum;
+            Balance += sum;
             return true;
         }
         return false;
@@ -29,7 +29,7 @@ internal class DebetCard : PaymentCards
 
     public override string ToString()
     {   
-        return string.Format("DebetCard balanse: {0}  ", _balance);
+        return string.Format("DebetCard balanse: {0}  ", Balance);
     }
 
 }

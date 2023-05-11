@@ -6,9 +6,9 @@ namespace Card.PaymentMeans
         public Cash(float balance) : base(balance) { }
         public override bool Pay(float amount)
         {
-            if (_balance - amount > 0)
+            if (Balance - amount > 0)
             {
-                _balance -= amount;    
+                Balance -= amount;    
                 return true;
             }
             return false;
@@ -17,14 +17,14 @@ namespace Card.PaymentMeans
         {
             if (sum > 0)
             {
-                _balance += sum;
+                Balance += sum;
                 return true;
             }
             return false;
         }
         public override string ToString()
         {
-            return string.Format("Cash balance: {0}", _balance);
+            return string.Format("Cash balance: {0}", Balance);
         }
 
     }

@@ -40,6 +40,7 @@ internal class BankClient
         if (mean != null)
         {
             PaymentMeans.Add(mean);
+
             return true;
         }
         return false;
@@ -74,6 +75,7 @@ internal class BankClient
     public IEnumerable<DebetCard> GetDebetCardsClient()
     {
         var listDebetCardsClient = PaymentMeans.OfType<DebetCard>().ToList();
+
         return listDebetCardsClient;
     }
 
@@ -81,14 +83,15 @@ internal class BankClient
     {
        return  PaymentMeans.OfType<PaymentTool>().Select(x => x.Balance).Sum();
     }
-    public List<PaymentTool> GetClinetBitCoinDescending()
+    public List<PaymentTool> GetClientBitCoinDescending()
     {
         List<PaymentTool> sortListDescending = new();
+
         foreach (var card in PaymentMeans)
         {
             if (card is BitCoin)
             {
-               sortListDescending = PaymentMeans.OfType<PaymentTool>().OrderByDescending(x => x.Balance).ToList();                
+               sortListDescending = PaymentMeans.OfType<PaymentTool>().OrderByDescending(x => x.Balance).ToList();                            
             }
         }
 
@@ -114,6 +117,7 @@ internal class BankClient
         }
         return false;
     }
+
 }
 
 

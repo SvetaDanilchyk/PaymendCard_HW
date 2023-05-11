@@ -5,9 +5,9 @@ internal class BitCoin : PaymentTool
     public BitCoin(float balance):base(balance) { }
     public override bool Pay(float amount)
     {
-        if (_balance - amount > 0)
+        if (Balance - amount > 0)
         {
-            _balance -= amount;
+            Balance -= amount;
             return true;
         }
         return false;
@@ -17,7 +17,7 @@ internal class BitCoin : PaymentTool
     {
         if (sum > 0)
         {
-            _balance += sum;
+            Balance += sum;
             return true;
         }
         return false;
@@ -25,6 +25,6 @@ internal class BitCoin : PaymentTool
 
     public override string ToString()
     {
-        return string.Format("Bitcoin: {0} ", _balance);
+        return string.Format("Bitcoin: {0} ", Balance);
     }
 }
