@@ -1,9 +1,7 @@
 ﻿namespace Card.PaymentMeans.PaymentCards;
 
-internal class CreditCard : PaymentCards
+public class CreditCard : PaymentCards
 {
-   // private float _balanceLimit;
-
     private float BalanceLimit { get => Limit + Balance; }   
     public float CreditPercent { get; set; }
     public float Limit { get; set; }
@@ -15,9 +13,7 @@ internal class CreditCard : PaymentCards
     }
     public override bool Pay(float amount)
     {
-       //alanceLimit = Balance + Limit;
-
-        if (BalanceLimit > amount)
+        if (BalanceLimit >= amount)
         {
             Balance -= amount;
             return true;
@@ -30,9 +26,9 @@ internal class CreditCard : PaymentCards
         if (sum > 0)
         {
             Balance += sum;
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
     public override string ToString()
     {
