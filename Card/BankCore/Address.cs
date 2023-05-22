@@ -1,13 +1,60 @@
-﻿namespace Card.BankCore;
+﻿using System.Runtime.Loader;
 
-internal class Address 
+namespace Card.BankCore;
+
+public class Address 
 {
+    private string _country;
+    private string _city;
+    private string _street;
     private string _houseNumber;
     private string _flatNumber;
     private int _index;
-    public string Country { get; set; }
-    public string City { get; set; }
-    public string Street { get; set; }
+    public string Country
+    {
+        get
+        {
+            return _country;
+        }
+        set
+        {
+            if (value == "")
+            {
+                throw new ArgumentOutOfRangeException("Country field is empty");
+            }
+            _country = value;
+        }
+    }
+    public string City 
+    {
+        get
+        {
+            return _city;
+        }
+        set
+        {
+            if (value == "")
+            {
+                throw new ArgumentOutOfRangeException("City field is empty");
+            }
+            _city = value;
+        }
+    }
+    public string Street 
+    {
+        get
+        {
+            return _street;
+        }
+        set
+        {
+            if( value == "")
+            {
+                throw new ArgumentOutOfRangeException("Street field is empty");
+            }
+            _street = value;
+        }
+    }
     public string HouseNumber 
     {
         get 
@@ -22,7 +69,7 @@ internal class Address
             }
             else
             {
-                throw new ArgumentException("Empty string entered");
+                throw new ArgumentOutOfRangeException("Empty string entered");
             }
         } 
     }
@@ -52,7 +99,7 @@ internal class Address
         {
             if (value == 0 || value < 0)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException("Empty string entered");
             }
             _index = value;
         }
@@ -69,7 +116,24 @@ internal class Address
     }
     public override string ToString()
     {
-        return String.Format("country: {0}, city: {1},street: {2},HouseNumber: {3},flatNumber: {4},index: {5}", Country, City, Street, HouseNumber, FlatNumber, Index);
+        return String.Format("Country: {0}, Сity: {1}, Street: {2}, HouseNumber: {3}, FlatNumber: {4}, Index: {5}", Country, City, Street, HouseNumber, FlatNumber, Index);
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is Address)
+        {
+            Address address = (Address)obj;
+
+            return this.Country == address.Country &&
+                   this.City == address.City &&
+                   this.Street == address.Street &&
+                   this.HouseNumber == address.HouseNumber &&
+                   this.FlatNumber == address.FlatNumber &&
+                   this.Index == address.Index;
+            
+        }
+        return false;
     }
 
 }

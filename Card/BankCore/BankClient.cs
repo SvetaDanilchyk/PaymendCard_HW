@@ -1,12 +1,13 @@
-﻿using Card.PaymentMeans;
+﻿using Card.Comparers;
+using Card.PaymentMeans;
 using Card.PaymentMeans.PaymentCards;
 
 namespace Card.BankCore;
 
-internal class BankClient 
+public class BankClient 
 {
     private string _name;
-    public Address Adress { get; set; }
+    public Address Address { get; set; }
     public List<IPayment> PaymentMeans { get;}
     public string Name 
     {
@@ -22,28 +23,30 @@ internal class BankClient
             }
             else if (value.Length > 50)
             {
-                throw new ArgumentException("Input name is long");
+                throw new ArgumentOutOfRangeException("Input name is long");
             }
             _name = value;
         }
     }
 
-    public BankClient(string name, Address adress)
+    public BankClient(string name, Address address)
     {
         Name = name;
-        Adress = adress;
+        Address = address;
         PaymentMeans = new List<IPayment>();
     }
 
     public bool AddPaymentMean(IPayment mean)
-    { 
+    {
         if (mean != null)
         {
             PaymentMeans.Add(mean);
-
             return true;
         }
-        return false;
+        else 
+        {
+            throw new ArgumentOutOfRangeException("Card missing");
+        }
             
     }
     public bool MakePaymentBankClient(float amount)
@@ -104,6 +107,29 @@ internal class BankClient
         PaymentMeans.OfType<PaymentTool>().Select(x => (paymentMeans += x.ToString() + "\n")).ToList();
 
         return paymentMeans;
+    }
+    public float AllMeans()
+    {
+        float allMeans = PaymentMeans.OfType<PaymentTool>().Select(x => x.Balance).Sum();
+
+        return allMeans;
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is BankClient)
+        {
+            BankClient client = (BankClient)obj;
+            if (this.Name == client.Name && 
+                this.Address.Equals(client.Address) && 
+                this.AllMeans().Equals(client.AllMeans()))
+            {
+                return true;
+            }
+        }
+
+        return false;
+;
     }
 
     private bool SpecialPay(List<IPayment> list, float amount)

@@ -1,6 +1,6 @@
 ﻿namespace Card.PaymentMeans.PaymentCards;
 
-internal class DebetCard : PaymentCards
+public class DebetCard : PaymentCards
 {
     public float DepositPercent { get; set; }
 
@@ -29,7 +29,7 @@ internal class DebetCard : PaymentCards
 
     public override string ToString()
     {   
-        return string.Format("DebetCard balanse: {0}  ", Balance);
+        return string.Format("DebetCard balanse: {0} ", Balance);
     }
 
 }

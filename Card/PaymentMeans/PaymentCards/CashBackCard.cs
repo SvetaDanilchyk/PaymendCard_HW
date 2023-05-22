@@ -1,6 +1,6 @@
 ﻿namespace Card.PaymentMeans.PaymentCards;
 
-internal class CashBackCard : PaymentCards
+public class CashBackCard : PaymentCards
 {
     private float _balanceCasBack;
     public float CashBack { get; set; }
@@ -12,7 +12,7 @@ internal class CashBackCard : PaymentCards
 
     public override bool Pay(float amount)
     {
-        if (Balance > amount)
+        if (Balance >= amount)
         {
             Balance -= amount;
             return true;

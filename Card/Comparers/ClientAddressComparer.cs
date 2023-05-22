@@ -10,6 +10,6 @@ internal class ClientAddressComparer : IComparer<BankClient>
         if (client1 != null && client2 == null) return -1;
         if (client1 == null && client2 != null) return 1;
 
-        return client1.Adress.City.CompareTo(client2.Adress.City);
+        return client1.Address.City.CompareTo(client2.Address.City);
     }
 }

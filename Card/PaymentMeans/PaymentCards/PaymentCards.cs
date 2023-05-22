@@ -1,6 +1,6 @@
 ﻿namespace Card.PaymentMeans.PaymentCards;
 
-internal abstract class PaymentCards : PaymentTool
+public abstract class PaymentCards : PaymentTool
 {
     private DateTime _date;
     private ushort _cvv;
@@ -13,9 +13,9 @@ internal abstract class PaymentCards : PaymentTool
         }
         private set
         {
-            if (value.Length > 6)
+            if (value.Length > 6 || value.Length <= 5)
             {
-                throw new ArgumentException();
+                throw new ArgumentOutOfRangeException("Wrong number length!");
             }
 
             _cardNumber = value;
@@ -31,11 +31,11 @@ internal abstract class PaymentCards : PaymentTool
         {
             if (value > 1000)
             {
-                throw new ArgumentException("CVV must be no more than three characters ");
+                throw new ArgumentOutOfRangeException("CVV must be no more than three characters ");
             }
-            else if (value <= 0)
+            else if (value == 0)
             {
-                throw new ArgumentException("CVV not entered");
+                throw new ArgumentOutOfRangeException("CVV not entered");
             }        
                _cvv = value;
             
@@ -53,6 +53,10 @@ internal abstract class PaymentCards : PaymentTool
             {
                 _date = value;
             }
+            else
+            {
+                throw new ArgumentOutOfRangeException(nameof(value));
+            }
         }
     }
 
@@ -63,6 +67,20 @@ internal abstract class PaymentCards : PaymentTool
         CVV = cvv;
     }
 
+    public override bool Equals(object obj)
+    {
+        if (obj is PaymentCards) 
+        {
+            PaymentCards other = (PaymentCards)obj;
+
+            this.CardNumber.Equals(other.CardNumber); 
+            
+            return true;
+
+        }
+
+        return false;
+    }
     public override abstract bool Pay(float amount);
     public override abstract bool TopUp(float sum);
 
