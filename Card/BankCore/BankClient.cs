@@ -1,5 +1,4 @@
-﻿using Card.Comparers;
-using Card.PaymentMeans;
+﻿using Card.PaymentMeans;
 using Card.PaymentMeans.PaymentCards;
 
 namespace Card.BankCore;
