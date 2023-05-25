@@ -14,7 +14,7 @@ internal class VacanciesPage
     const string VACANCIES_COLLECTIONS_XPATH = "//a[@class='collections__item gtm-track-collection-click']";
     const string VACANCIES_PAGE_WINDOWB_XPATH = "//button[@class = 'wishes-popup__button-close wishes-popup__button-close_icon']";//= 'submit'
 
-    const string VAC_PAGE = "//label[@class='collection_radio_buttons']"; //для список 28
+    const string VAC_PAGE = "//label[@class='collection_radio_buttons']"; 
     public int numberVacanciesOnVacanciesPage { get; set; }
     public VacanciesPage(IWebDriver driver)
     {
