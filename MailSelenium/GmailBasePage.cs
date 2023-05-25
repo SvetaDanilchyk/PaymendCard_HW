@@ -7,27 +7,27 @@ namespace MailSelenium;
 
 public abstract class GmailBasePage
 {
-    protected IWebDriver _driver;
-    protected WebDriverWait _wait;
+    protected IWebDriver Driver;
+    protected WebDriverWait Wait;
      
     protected GmailBasePage(IWebDriver driver) 
     {
-            _driver = driver;
-            _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
+            Driver = driver;
+            Wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(30));
     }
 
     protected IWebElement FindMailElement(string xPath)
     {
-        return _wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(xPath)));
+        return Wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(xPath)));
     }
     protected IWebElement FindMessageToRead(string xPath)
     {
-        WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(600));
+        WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(600));
         return wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(xPath)));
     }
     protected ReadOnlyCollection <IWebElement> FindMessageElements(string xPath)
     {
-        return _wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(By.XPath(xPath)));
+        return Wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(By.XPath(xPath)));
     }
 
 
