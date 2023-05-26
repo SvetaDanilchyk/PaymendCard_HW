@@ -1,5 +1,7 @@
 ﻿
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 using System.Collections.ObjectModel;
 
 namespace WebDriverDevBy.Pages;
@@ -7,40 +9,40 @@ namespace WebDriverDevBy.Pages;
 internal class VacanciesPage
 {
     IWebDriver _driver;
+    WebDriverWait _wait;
 
     ReadOnlyCollection<IWebElement> vacancies;
+
     public List<CollectionWrapper> CollectionsVacancies;
+    public int NumberVacanciesOnVacanciesPage { get; set; }
 
-    const string VACANCIES_COLLECTIONS_XPATH = "//a[@class='collections__item gtm-track-collection-click']";
-    const string VACANCIES_PAGE_WINDOWB_XPATH = "//button[@class = 'wishes-popup__button-close wishes-popup__button-close_icon']";//= 'submit'
-
-    const string VAC_PAGE = "//label[@class='collection_radio_buttons']"; 
-    public int numberVacanciesOnVacanciesPage { get; set; }
     public VacanciesPage(IWebDriver driver)
     {
         _driver = driver;
         CollectionsVacancies = new List<CollectionWrapper>();
+        _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
     }
+
     public List<CollectionWrapper> GetCountVacancies()
     {
 
-        vacancies = _driver.FindElements(By.XPath(VAC_PAGE));
+        vacancies = _driver.FindElements(By.XPath(Constans.VACANCIES_COLLECTIONS_XPATH));
         vacancies.ToList().ForEach(x =>
         {
             x.Click();
             Thread.Sleep(500);
-            string strNameWithQuantity = _driver.FindElement(By.XPath("//h1[@class='vacancies-list__header-title']")).Text;
+            string strNameWithQuantity = _driver.FindElement(By.XPath(Constans.HEADER_VACANCIES_AND_QUANTITY)).Text;
             if (strNameWithQuantity != null)
             {
-                String[] splitResult = strNameWithQuantity.Split(" ");
+                string[] splitResult = strNameWithQuantity.Split(" ");
                 CollectionsVacancies.Add(new CollectionWrapper
-                                        (_driver.FindElement(By.XPath("//span[@class='vacancies-list__filter-tag__text']")).Text,
-                                        Int32.Parse(splitResult[0])));
+                                        (_driver.FindElement(By.XPath(Constans.NAME_VACANCIES)).Text,
+                                        int.Parse(splitResult[0])));
             }
             else
             {
                 CollectionsVacancies.Add(new CollectionWrapper
-                                        (_driver.FindElement(By.XPath("//span[@class='vacancies-list__filter-tag__text']")).Text, 0));
+                                        (_driver.FindElement(By.XPath(Constans.NAME_VACANCIES)).Text, 0));
             }
         });
 
@@ -60,14 +62,12 @@ internal class VacanciesPage
 
     public void CloseInfoWindowOnVacanciesPage()
     {
-        Thread.Sleep(3000);
-        var buttonCloseWindow = _driver.FindElement(By.XPath(VACANCIES_PAGE_WINDOWB_XPATH));
-        buttonCloseWindow.Click();
+        _wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(Constans.CLOSE_BUTTON_XPATH))).Click();
     }
 
     public void GetNumberOfVacanciesOnVacanciesPage()
     {
-        numberVacanciesOnVacanciesPage = CollectionsVacancies.Select(x => x.CountVacancies).Sum();
+        NumberVacanciesOnVacanciesPage = CollectionsVacancies.Select(x => x.CountVacancies).Sum();
     }
 
 }

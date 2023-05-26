@@ -27,9 +27,9 @@ internal class Program
         collectionSortByDescending.ToList().ForEach(x => Console.WriteLine(x));
 
         //5 compare by the number of vacancies from the IndexPage
-        Console.WriteLine("\nIndex = " + indexPage.numberVacancies + "\n" + "Vacancies = " + vacanciesPage.numberVacanciesOnVacanciesPage + "\n");
-        Console.WriteLine(indexPage.numberVacancies == vacanciesPage.numberVacanciesOnVacanciesPage);
+        Console.WriteLine("\nIndex = " + indexPage.numberVacancies + "\n" + "Vacancies = " + vacanciesPage.NumberVacanciesOnVacanciesPage + "\n");
+        Console.WriteLine(indexPage.numberVacancies == vacanciesPage.NumberVacanciesOnVacanciesPage);
 
-        indexPage.Unitialize();
+        indexPage.CloseDriver();
     }
 }
