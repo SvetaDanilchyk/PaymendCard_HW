@@ -6,6 +6,7 @@ namespace Card.BankCore;
 public class BankClient 
 {
     private string _name;
+
     public Address Address { get; set; }
     public List<IPayment> PaymentMeans { get;}
     public string Name 
@@ -116,12 +117,11 @@ public class BankClient
 
     public override bool Equals(object obj)
     {
-        if (obj is BankClient)
+        if (obj is BankClient client)
         {
-            BankClient client = (BankClient)obj;
-            if (this.Name == client.Name && 
-                this.Address.Equals(client.Address) && 
-                this.AllMeans().Equals(client.AllMeans()))
+            if ( Name == client.Name && 
+                 Address.Equals(client.Address) && 
+                 AllMeans().Equals(client.AllMeans()))
             {
                 return true;
             }

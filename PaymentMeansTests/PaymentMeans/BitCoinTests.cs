@@ -11,7 +11,7 @@ public class BitCoinTests
     [ExpectedException(typeof(ArgumentOutOfRangeException))]
     public void BitCoinSumTestNegative()
     {
-        var bitCoin1 = new BitCoin(-700);
+        _ = new BitCoin(-700);
     }
 
     [TestMethod]

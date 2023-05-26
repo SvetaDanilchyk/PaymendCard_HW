@@ -2,6 +2,8 @@
 
 public class Constants
 {
+    //response message 
+    public static string responseMessage = "Hi!" + DateTime.Now;
 
     public const string LOGIN_IN_XPATH = "//a[@data-label='header' and text()='Войти']";
 
@@ -34,8 +36,7 @@ public class Constants
     // message
     public static string message = "Hello!" + DateTime.Now;
 
-    //response message 
-    public static string responseMessage = "Hello!" + DateTime.Now;
+    
 
     //update
     public const string UPDATE_XPATH = "//*[@id=':4']/div/div[1]/div[1]/div/div/div[5]/div/div";

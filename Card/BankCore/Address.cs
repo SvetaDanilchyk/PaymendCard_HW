@@ -10,6 +10,7 @@ public class Address
     private string _houseNumber;
     private string _flatNumber;
     private int _index;
+
     public string Country
     {
         get
@@ -25,6 +26,7 @@ public class Address
             _country = value;
         }
     }
+
     public string City 
     {
         get
@@ -40,6 +42,7 @@ public class Address
             _city = value;
         }
     }
+
     public string Street 
     {
         get
@@ -55,6 +58,7 @@ public class Address
             _street = value;
         }
     }
+
     public string HouseNumber 
     {
         get 
@@ -73,6 +77,7 @@ public class Address
             }
         } 
     }
+
     public string FlatNumber 
     {
         get
@@ -89,6 +94,7 @@ public class Address
             _flatNumber = value;
         }
     }
+
     public int Index
     {
         get
@@ -121,16 +127,14 @@ public class Address
 
     public override bool Equals(object obj)
     {
-        if (obj is Address)
+        if (obj is Address address)
         {
-            Address address = (Address)obj;
-
-            return this.Country == address.Country &&
-                   this.City == address.City &&
-                   this.Street == address.Street &&
-                   this.HouseNumber == address.HouseNumber &&
-                   this.FlatNumber == address.FlatNumber &&
-                   this.Index == address.Index;
+            return Country == address.Country &&
+                   City == address.City &&
+                   Street == address.Street &&
+                   HouseNumber == address.HouseNumber &&
+                   FlatNumber == address.FlatNumber &&
+                   Index == address.Index;
             
         }
         return false;

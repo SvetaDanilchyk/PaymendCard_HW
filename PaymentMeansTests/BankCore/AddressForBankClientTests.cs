@@ -17,7 +17,7 @@ public class AddressForBankClientTests
     [ExpectedException(typeof(ArgumentOutOfRangeException))]
     public void AddressFieldIsEmptyNegative(string country, string city, string street, string houseNumber, string flatNumber, int index)
     {
-        var address2 = new Address(country, city, street, houseNumber, flatNumber, index);
+        _ = new Address(country, city, street, houseNumber, flatNumber, index);
     }
 
     [TestMethod]

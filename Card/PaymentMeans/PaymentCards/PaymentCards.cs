@@ -5,6 +5,7 @@ public abstract class PaymentCards : PaymentTool
     private DateTime _date;
     private ushort _cvv;
     private string _cardNumber;
+
     public string CardNumber 
     {
         get
@@ -21,6 +22,7 @@ public abstract class PaymentCards : PaymentTool
             _cardNumber = value;
         }
     }
+
     public ushort CVV 
     {
         get 
@@ -41,6 +43,7 @@ public abstract class PaymentCards : PaymentTool
             
         }
     }
+
     public DateTime ExpirityData
     {
         get
@@ -69,11 +72,9 @@ public abstract class PaymentCards : PaymentTool
 
     public override bool Equals(object obj)
     {
-        if (obj is PaymentCards) 
+        if (obj is PaymentCards other) 
         {
-            PaymentCards other = (PaymentCards)obj;
-
-            this.CardNumber.Equals(other.CardNumber); 
+            CardNumber.Equals(other.CardNumber); 
             
             return true;
 
@@ -82,6 +83,7 @@ public abstract class PaymentCards : PaymentTool
         return false;
     }
     public override abstract bool Pay(float amount);
+
     public override abstract bool TopUp(float sum);
 
 }
