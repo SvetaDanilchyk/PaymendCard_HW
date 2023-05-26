@@ -5,6 +5,7 @@ namespace Card.PaymentMeans;
 public class BitCoin : PaymentTool
 {
     public BitCoin(float balance):base(balance) { }
+
     public override bool Pay(float amount)
     {
         if (Balance - amount >= 0)
@@ -24,6 +25,7 @@ public class BitCoin : PaymentTool
         }
         return false;
     }
+
     public override bool Equals(object obj)
     {
         if (obj is BitCoin)  
@@ -33,6 +35,7 @@ public class BitCoin : PaymentTool
         return false;
 
     }
+
     public override string ToString()
     {
         return string.Format("Bitcoin: {0} ", Balance);

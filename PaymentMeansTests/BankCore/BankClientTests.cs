@@ -5,7 +5,7 @@ using Card.PaymentMeans.PaymentCards;
 namespace PaymentMeansTests.BankCore
 {
     [TestClass]
-    public class BankKlientTests
+    public class BankClientTests
     {
         
         BankClient client1 = new BankClient("Petrov Igor", new("BY", "Minsk", "Pobedy", "25", "25D", 600200));
@@ -14,7 +14,7 @@ namespace PaymentMeansTests.BankCore
         [ExpectedException(typeof(ArgumentException))]
         public void NameIsEmptyForBankClientNegative()
         {
-            BankClient client = new BankClient("", new("BY", "Minsk", "Pobedy", "25", "25D", 600200));
+            var client = new BankClient("", new("BY", "Minsk", "Pobedy", "25", "25D", 600200));
 
             Assert.IsTrue(client.Name == "");
         }
@@ -23,7 +23,7 @@ namespace PaymentMeansTests.BankCore
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void NameOverFiftyCharactersForBankClientNegative()
         {
-            BankClient client = new BankClient("Petrov Igor Petrov IgorPetrov IgorPetrov IgorPetrov Igor", new("BY", "Minsk", "Pobedy", "25", "25D", 600200));
+            var client = new BankClient("Petrov Igor Petrov IgorPetrov IgorPetrov IgorPetrov Igor", new("BY", "Minsk", "Pobedy", "25", "25D", 600200));
 
             Assert.IsTrue(client.Name.Length > 50);
         }

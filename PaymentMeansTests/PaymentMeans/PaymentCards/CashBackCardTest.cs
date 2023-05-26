@@ -1,4 +1,5 @@
 ﻿using Card.PaymentMeans.PaymentCards;
+using System;
 
 namespace PaymentMeansTests.PaymentMeans.PaymentCards;
 [TestClass]
@@ -12,6 +13,7 @@ public class CashBackCardTest
     {
         CashBackCard cashBackCard = new("268128", new(2029, 06, 21), 0, 500, 5000);
     }
+
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentOutOfRangeException))]

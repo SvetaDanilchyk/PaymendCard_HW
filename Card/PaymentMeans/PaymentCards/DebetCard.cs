@@ -8,6 +8,7 @@ public class DebetCard : PaymentCards
     {
         DepositPercent = depositPercent;
     }
+
     public override bool Pay(float amount)
     {
         if (Balance > amount)
@@ -17,6 +18,7 @@ public class DebetCard : PaymentCards
         }
         return false;
     }
+
     public override bool TopUp(float sum)
     {
         if (sum > 0)
@@ -31,5 +33,4 @@ public class DebetCard : PaymentCards
     {   
         return string.Format("DebetCard balanse: {0} ", Balance);
     }
-
 }

@@ -9,25 +9,25 @@ public class CashTests
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentOutOfRangeException))]
-    public void BitCoinSumTestNegative()
+    public void CashCoinSumTestNegative()
     {
-        var cash = new Cash(-400);
+        _ = new Cash(-400);
     }
 
     [TestMethod]
-    public void CheckTopUpForBitCoinPositive()
+    public void CheckTopUpForCashPositive()
     {
         Assert.IsTrue(cash.TopUp(8000));
     }
 
     [TestMethod]
-    public void CheckTopUpForBitCoinNegative()
+    public void CheckTopUpForCashNegative()
     {
         Assert.IsFalse(cash.TopUp(-100));
     }
 
     [TestMethod]
-    public void BitCoinToStringMethodFormatTestPositive()
+    public void CashToStringMethodFormatTestPositive()
     {
         string expectedResult = "Cash balance: 1000 ";
 
@@ -35,19 +35,19 @@ public class CashTests
     }
 
     [TestMethod]
-    public void CheckPaymentOperationForBitCoinPositive()
+    public void CheckPaymentOperationForCashPositive()
     {
         Assert.IsTrue(cash.Pay(100));
     }
 
     [TestMethod]
-    public void CheckPaymentOperationForBitCoinNegative()
+    public void CheckPaymentOperationForCashNegative()
     {
         Assert.IsFalse(cash.Pay(1100));
     }
 
     [TestMethod]
-    public void BitCoinEqualsTestPositive()
+    public void CashEqualsTestPositive()
     {
         var cash1 = new BitCoin(1000);
 
@@ -55,7 +55,7 @@ public class CashTests
     }
 
     [TestMethod]
-    public void BitCoinEqualsTestNegative()
+    public void CashEqualsTestNegative()
     {
         var cash1 = new BitCoin(700);
 

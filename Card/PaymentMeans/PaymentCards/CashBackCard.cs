@@ -2,8 +2,8 @@
 
 public class CashBackCard : PaymentCards
 {
-    private float _balanceCasBack;
     public float CashBack { get; set; }
+
     public CashBackCard(string cardNumber, DateTime data, ushort cvvCard, float cashBack, float balance) : base(cardNumber, data, cvvCard, balance)
     {
         CashBack = cashBack;
@@ -19,6 +19,7 @@ public class CashBackCard : PaymentCards
         }
         return false;
     }
+
     public override bool TopUp(float sum)
     {
         if (sum > 0)

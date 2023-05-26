@@ -11,28 +11,28 @@ public class CreditCardTests
     [ExpectedException(typeof(ArgumentOutOfRangeException))]
     public void CheckCVVCardEequalToZeroForCreditCardNegative()
     {
-        CreditCard creditCard = new("308259", new(2025, 04, 30), 0, 2400, 1.3F, 3000);
+        CreditCard _ = new("308259", new(2025, 04, 30), 0, 2400, 1.3F, 3000);
     }
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentOutOfRangeException))]
     public void CheckCVVCardOverFourCharactersForCreditCardNegative()
     {
-        CreditCard creditCard = new("308259", new(2025, 04, 30), 9109, 2400, 1.3F, 3000);
+        CreditCard _ = new("308259", new(2025, 04, 30), 9109, 2400, 1.3F, 3000);
     }
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentOutOfRangeException))]
     public void CheckCardNumberForCreditCardNegative()
     {
-        CreditCard creditCard = new("308545259", new(2025, 04, 30), 919, 2400, 1.3F, 3000);
+        CreditCard _ = new("308545259", new(2025, 04, 30), 919, 2400, 1.3F, 3000);
     }
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentOutOfRangeException))]
     public void CheckExpirityDateForCreditCardNegative()
     {
-        CreditCard card = new("308259", new(2022, 04, 30), 919, 2400, 1.3F, 3000);
+        CreditCard _ = new("308259", new(2022, 04, 30), 919, 2400, 1.3F, 3000);
     }
 
     [TestMethod]
