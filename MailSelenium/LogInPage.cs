@@ -4,13 +4,11 @@ namespace MailSelenium;
 
 public class LogInPage : GmailBasePage
 {
-    string Name;
     public string Password;
     public string Mail;   
 
-    public LogInPage(IWebDriver driver, string name, string mail, string password):base(driver)
+    public LogInPage(IWebDriver driver, string mail, string password):base(driver)
     {
-        Name = name;
         Mail = mail;
         Password = password;
     }
